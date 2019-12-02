@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import os
+import shutil
 import subprocess
 from typing import List
 from typing import Optional
@@ -10,7 +11,7 @@ from urllib import request
 def main(argv: Optional[List[str]] = None) -> int:
     parser = argparse.ArgumentParser(
         'create a new day in rust. '
-        'attempts pull token from a file named TOKEN if --token isn\'t passed'
+        'attempts pull token from a file named TOKEN if --token isn\'t passed',
     )
     parser.add_argument('day', help='day for AoC')
     parser.add_argument('--token', help='session token for AoC')
@@ -20,6 +21,7 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     if not os.path.exists(day):
         subprocess.check_call(['cargo', 'new', '--name', f'day{day}', day])
+        shutil.copyfile('main.rs', f'{day}/src/main.rs')
 
     if session is None:
         with open('TOKEN') as f:
