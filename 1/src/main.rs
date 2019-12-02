@@ -11,7 +11,24 @@ fn main() {
     let input = fs::read_to_string(&args[1]).expect("Unable to read file");
     let sum = input
         .lines()
-        .map(|x| (x.parse::<u64>().expect("Couldn't parse line!")) / 3 - 2)
-        .fold(0, |acc, x| acc + x);
+        .map(|x| {
+            let module_mass = x.parse::<i64>().expect("Couldn't parse line!");
+            println!("module mass: {}", module_mass);
+            let mut total = module_mass / 3 - 2;
+            let mut prev_fuel = total;
+            loop {
+                println!("fuel: {}", prev_fuel);
+                let curr_fuel = prev_fuel / 3 - 2;
+                if curr_fuel < 0 {
+                    break total;
+                }
+                prev_fuel = curr_fuel;
+                total += curr_fuel;
+            }
+        })
+        .fold(0, |acc, x| {
+            println!("total: {}", x);
+            acc + x
+        });
     println!("sum: {}", sum)
 }
