@@ -17,8 +17,8 @@ fn main() {
 
     let mut noun = 0;
     let mut verb = 0;
-    println!("noun {}, verb {}", noun, verb);
     loop {
+        println!("noun {}, verb {}", noun, verb);
         let mut ops = original_ops.clone();
         ops[1] = noun;
         ops[2] = verb;
