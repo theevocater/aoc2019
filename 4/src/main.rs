@@ -4,7 +4,6 @@ fn validate(i: i32) -> bool {
     let mut prev_digit = i % 10;
     let mut adjacent = false;
     let mut adjacents: HashMap<i32, i32> = HashMap::new();
-    let mut prev_adjacent = prev;
     let mut prev_adjacent_count = 0;
     while prev > 0 {
         let curr = prev / 10;
