@@ -32,12 +32,9 @@ fn validate(i: i32) -> bool {
 fn main() {
     let lower = 265275;
     let upper = 781584 + 1;
-    let mut total = 0;
-    for i in lower..upper {
-        if validate(i) {
-            println!("{}", i);
-            total += 1;
-        }
-    }
+    let total: i32 = (lower..upper)
+        .filter_map(|x| if validate(x) { Some(1) } else { None })
+        .sum();
+
     println!("Total: {}", total);
 }
