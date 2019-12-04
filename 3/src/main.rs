@@ -18,15 +18,15 @@ fn main() {
         process::exit(1);
     }
 
-    let mut grids: Vec<Vec<Vec<i32>>> = vec![];
+    let mut grids: Vec<Box<Vec<Box<Vec<i32>>>>> = vec![];
 
     let input = fs::read_to_string(&args[1]).expect("Unable to read file");
-    let matrix = 20000 as usize;
+    let matrix = 30000 as usize;
     for line in input.lines() {
-        let mut wire_grid = vec![vec![0; matrix]; matrix];
+        let mut wire_grid = Box::new(vec![Box::new(vec![0; matrix]); matrix]);
         //print_matrix(&wire_grid);
-        let mut r: usize = wire_grid.len() / 2 - 1;
-        let mut c: usize = wire_grid.len() / 2 - 1;
+        let mut r: usize = matrix / 2 - 1;
+        let mut c: usize = matrix / 2 - 1;
         for d in line.split(',') {
             let direction = d.chars().nth(0).expect("Needed One char");
             let distance = *&d[1..].parse::<usize>().expect("Failed to parse distance!!");
@@ -65,12 +65,16 @@ fn main() {
     }
 
     println!("adding matrixes {}", grids.len());
-    let mut wire_grid = vec![vec![0; matrix]; matrix];
+    let mut wire_grid = Box::new(vec![Box::new(vec![0; matrix]); matrix]);
     for grid in grids {
-        for r in 0..matrix {
-            for c in 0..matrix {
+        let mut r = 0 as usize;
+        while r < matrix {
+            let mut c = 0 as usize;
+            while c < matrix {
                 wire_grid[r][c] += grid[r][c];
+                c += 1;
             }
+            r += 1;
         }
     }
 
