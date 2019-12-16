@@ -34,11 +34,9 @@ fn main() {
         print!("{}-{}", from, to);
         println!();
         match vertex_map.remove(from) {
-            // terminal, return current sum + 1
             None => {
                 vertex_map.insert(from, vec![to]);
             }
-            // calculate sum for each child
             Some(mut vertexes) => {
                 vertexes.push(to);
                 vertex_map.insert(from, vertexes);
